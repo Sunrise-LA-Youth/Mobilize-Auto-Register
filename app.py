@@ -22,7 +22,7 @@ def form():
         rowcount = cur.rowcount
         eta = (rowcount + 1) * MIN_INTERVAL
         
-        newFilename = uuid.uuid4() + '.txt'
+        newFilename = str(uuid.uuid4()) + '.txt'
         file = request.files['tsvFile']
         file.save('/uploads/'+newFilename)
         
