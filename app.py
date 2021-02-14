@@ -24,19 +24,16 @@ def form():
         
         newFilename = str(uuid.uuid4()) + '.txt'
         file = request.files['tsvFile']
-        file.save('tmp/'+newFilename)
+        #file.save('tmp/'+newFilename)
         
         error = False
         if ".txt" not in file.filename:
             flash('<strong>Invalid file type:</strong> You must upload a .txt file.', 'danger')
             error = True
-        if os.stat('tmp/'+newFilename).st_size > 10000000:
-            flash('<strong>File too big:</strong> You must upload a .txt file that is under 10mb.', 'danger')
-            error = True
         if not error:
             ftp = FTP(FTP_HOST,FTP_USER,FTP_PASS)
-            ftp.storlines("STOR " + newFilename, open('tmp/'+newFilename, 'rb'))
-            os.remove('tmp/'+newFilename)
+            ftp.storlines("STOR " + newFilename, file.read())
+            #os.remove('tmp/'+newFilename)
             
             cur.execute("INSERT INTO registrations (mobilize_url,tsv_file,col_fname,col_lname,col_zip,col_email,col_cell,col_home) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",(request.form['mobilizeUrl'],newFilename,request.form['firstNameCol'],request.form['lastNameCol'],request.form['zipCol'],request.form['emailCol'],request.form['cellPhoneCol'],request.form['homePhoneCol']))
             conn.commit()
