@@ -1,5 +1,5 @@
 # Mobilize RSVPer
-Automatically RSVP a TSV of contacts (i.e. from EveryAction) to a Mobilize America event. Utilizes a PostgreSQL database to store a queue of lists of contacts to RSVP.
+Automatically RSVP a TSV of contacts (i.e. from EveryAction) to a Mobilize America event. Instead of using the Mobilize America API (which requires special API keys), this uses a virtual, headless Chrome browser that runs periodically by going to the RSVP page for each wanted attendee (using query parameters to pre-fill basic contact details) and then fills each custom required custom field (if any) with the value of the `DEFAULT_CUSTOM_FIELD_VAL` environment variable.
 
 ## Heroku Setup
 This is setup to be hosted on Heroku. Below are requirements when creating an app on Heroku.
@@ -14,23 +14,23 @@ This is setup to be hosted on Heroku. Below are requirements when creating an ap
 | ------------------------ | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | CHROMEDRIVER_PATH        | /app/.chromedriver/bin/chromedriver |                                                                                                                  |
 | DEFAULT_CUSTOM_FIELD_VAL | PYTHON AUTO REGISTER                | Sets a default value for required custom fields on the RSVP page                                                 |
-| FTP_HOST                 |                                     | Used to get/store contact lists                                                                                  |
-| FTP_PASS                 |                                     | Used to get/store contact lists                                                                                  |
-| FTP_USER                 |                                     | Used to get/store contact lists                                                                                  |
+| FTP_HOST                 |                                     | FTP hostname, used to get/store contact lists                                                                                  |
+| FTP_PASS                 |                                     | FTP password, used to get/store contact lists                                                                                  |
+| FTP_USER                 |                                     | FTP username, used to get/store contact lists                                                                                  |
 | GOOGLE_CHROME_BIN        | /app/.apt/usr/bin/google_chrome     |                                                                                                                  |
 | GOOGLE_CHROME_CHANNEL    | stable                              | Google Chrome release channel                                                                                    |
 | MIN_INTERVAL             | 3                                   | Time (in minutes) between events in queue                                                                        |
 | SENTRY_DSN               |                                     | Sentry DSN URL                                                                                                  |
 | SLEEP_TIME               | 0.5                                 | Time to wait between contact registrations. Recommended to be >0 so that the browser has time to submit the form |
-| UTM_CAMPAIGN             | python+auto+register                | URL-escaped UTM campaign                                                                                         |
-| UTM_MEDIUM               |                                     | URL-escaped UTM medium                                                                                           |
-| UTM_SOURCE               |                                     | URL-escaped UTM source                                                                                           |
+| UTM_CAMPAIGN             | python+auto+register                | URL-escaped UTM campaign to track where registrations come from in Mobilize attendance reports                                                                                         |
+| UTM_MEDIUM               |                                     | URL-escaped UTM medium to track where registrations come from in Mobilize attendance reports                                                                                           |
+| UTM_SOURCE               |                                     | URL-escaped UTM source to track where registrations come from in Mobilize attendance reports                                                                                           |
 
 ### Heroku Resources/Addons
 1. Heroku Postgres - any plan is fine, including the free plan. The database only stores the queue; auto-registration requests are automatically deleted once completed.
 
 ## How to use
-1. Head to /index.php (this must be stored on a PHP server, not in Heroku)
+1. Head to /index.php (this must be hosted on a PHP server, not in Heroku)
 2. Paste the Mobilize America RSVP URL (this is the public-facing link that people register for your events on)
 3. Get a list of contacts in tab-separated-value format. If you're using EveryAction, export a list of contacts you want to register. The bot is pre-programmed to work super easily with the fields (in order) in the screenshot below (it's recommended that you copy this export format just so that it’s super easy to use, and save it for the future!). Export the list as a text file. Then Download the file EveryAction generates, unzip it, and upload the .txt file on the bot page.
 ![EveryAction Export Format](export-format.png)
