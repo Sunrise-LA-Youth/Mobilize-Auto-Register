@@ -2,7 +2,9 @@
 Automatically RSVP a TSV of contacts (i.e. from EveryAction) to a Mobilize America event. Utilizes a PostgreSQL database to store a queue of lists of contacts to RSVP.
 
 ## Heroku Setup
-This is setup to be hosted on Heroku. Below are requirements when creating an app on Heroku.
+This is setup to be hosted on Heroku. You can deploy using the button below, or see the lists and tables below for setup requirements.
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ### Buildpacks
 1. heroku/python

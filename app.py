@@ -37,7 +37,7 @@ def form():
             
             cur.execute("INSERT INTO registrations (mobilize_url,tsv_file,col_fname,col_lname,col_zip,col_email,col_cell,col_home) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",(request.form['mobilizeUrl'],newFilename,request.form['firstNameCol'],request.form['lastNameCol'],request.form['zipCol'],request.form['emailCol'],request.form['cellPhoneCol'],request.form['homePhoneCol']))
             conn.commit()
-            flash('<strong>List submitted!</strong> The contacts you selected will be registered shortly for the specified Mobilize event. We estimate the contacts will be RSVPed in the next ' + eta + ' minutes, with ' + rowcount + ' other registrations ahead.', 'info')
+            flash('<strong>List submitted!</strong> The contacts you selected will be registered shortly for the specified Mobilize event. We estimate the contacts will be RSVPed in the next ' + str(eta) + ' minutes, with ' + str(rowcount) + ' other registrations ahead.', 'info')
         
         cur.close()
         conn.close()
