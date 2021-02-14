@@ -32,7 +32,7 @@ def form():
             error = True
         if not error:
             ftp = FTP(FTP_HOST,FTP_USER,FTP_PASS)
-            ftp.storlines("STOR " + newFilename, file.read())
+            ftp.storlines("STOR " + newFilename, file)
             #os.remove('tmp/'+newFilename)
             
             cur.execute("INSERT INTO registrations (mobilize_url,tsv_file,col_fname,col_lname,col_zip,col_email,col_cell,col_home) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",(request.form['mobilizeUrl'],newFilename,request.form['firstNameCol'],request.form['lastNameCol'],request.form['zipCol'],request.form['emailCol'],request.form['cellPhoneCol'],request.form['homePhoneCol']))
