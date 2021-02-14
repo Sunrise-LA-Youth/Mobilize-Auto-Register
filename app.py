@@ -25,7 +25,6 @@ def form():
         
         newFilename = str(uuid.uuid4()) + '.txt'
         file = request.files['tsvFile']
-        #file.save('tmp/'+newFilename)
         
         error = False
         if ".txt" not in file.filename:
@@ -34,7 +33,6 @@ def form():
         if not error:
             ftp = FTP(FTP_HOST,FTP_USER,FTP_PASS)
             ftp.storlines("STOR " + newFilename, file)
-            #os.remove('tmp/'+newFilename)
             
             cur.execute("INSERT INTO registrations (mobilize_url,tsv_file,col_fname,col_lname,col_zip,col_email,col_cell,col_home) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",(request.form['mobilizeUrl'],newFilename,request.form['firstNameCol'],request.form['lastNameCol'],request.form['zipCol'],request.form['emailCol'],request.form['cellPhoneCol'],request.form['homePhoneCol']))
             conn.commit()
