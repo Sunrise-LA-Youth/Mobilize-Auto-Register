@@ -11,15 +11,15 @@ from ftplib import FTP
 
 def rsvp():
     
-    DATABASE_URL = os.environ['DATABASE_URL']
-    FTP_HOST = os.environ['FTP_HOST']
-    FTP_USER = os.environ['FTP_USER']
-    FTP_PASS = os.environ['FTP_PASS']
-    UTM_MEDIUM = os.environ['UTM_MEDIUM']
-    UTM_SOURCE = os.environ['UTM_SOURCE']
-    UTM_CAMPAIGN = os.environ['UTM_CAMPAIGN']
-    DEFAULT_CUSTOM_FIELD_VAL = os.environ['DEFAULT_CUSTOM_FIELD_VAL']
-    SLEEP_TIME = int(os.environ['SLEEP_TIME'])
+    DATABASE_URL = os.getenv(['DATABASE_URL'])
+    FTP_HOST = os.getenv(['FTP_HOST'])
+    FTP_USER = os.getenv(['FTP_USER'])
+    FTP_PASS = os.getenv(['FTP_PASS'])
+    UTM_MEDIUM = os.getenv(['UTM_MEDIUM'])
+    UTM_SOURCE = os.getenv(['UTM_SOURCE'])
+    UTM_CAMPAIGN = os.getenv(['UTM_CAMPAIGN'],"python+auto+register")
+    DEFAULT_CUSTOM_FIELD_VAL = os.getenv(['DEFAULT_CUSTOM_FIELD_VAL'],"PYTHON AUTO REGISTER")
+    SLEEP_TIME = float(os.getenv(['SLEEP_TIME'],0.5))
 
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     
@@ -46,11 +46,11 @@ def rsvp():
         numRows = len(open(path).readlines(  )) - 1
         with open(path) as tsv:
             chrome_options = webdriver.ChromeOptions()
-            chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+            chrome_options.binary_location = os.getenv("GOOGLE_CHROME_BIN","/app/.apt/usr/bin/google_chrome")
             chrome_options.add_argument("--headless")
             chrome_options.add_argument("--disable-dev-shm-usage")
             chrome_options.add_argument("--no-sandbox")
-            driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+            driver = webdriver.Chrome(executable_path=os.getenv("CHROMEDRIVER_PATH","/app/.chromedriver/bin/chromedriver"), chrome_options=chrome_options)
 
             countRows = 0
             reader = csv.reader((line.replace('\0','') for line in tsv), delimiter="\t")
@@ -74,7 +74,13 @@ def rsvp():
                 else:
                     phone = cPhone
 
-                uniqueUrl = mobilizeLink + "?first_name=" + fName + "&last_name=" + lName + "&email=" + email + "&zip=" + zipCode + "&phone=" + phone + "&utm_medium="+UTM_MEDIUM+"&utm_source="+UTM_SOURCE+"&utm_campaign="+UTM_CAMPAIGN
+                uniqueUrl = mobilizeLink + "?first_name=" + fName + "&last_name=" + lName + "&email=" + email + "&zip=" + zipCode + "&phone=" + phone
+                if UTM_MEDIUM:
+                    uniqueUrl += "&utm_medium="+UTM_MEDIUM
+                if UTM_SOURCE:
+                    uniqueUrl += "&utm_source="+UTM_SOURCE
+                if UTM_CAMPAIGN:
+                    uniqueUrl += "&utm_campaign="+UTM_CAMPAIGN
 
                 driver.get(uniqueUrl)
                 customFieldWrapper = driver.find_element_by_css_selector(".signup-form div[class*=\"CustomFieldWrapper\"]")

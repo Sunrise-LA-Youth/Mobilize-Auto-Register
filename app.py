@@ -7,17 +7,18 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def form():
     if request.method == 'POST':
-        DATABASE_URL = os.environ['DATABASE_URL']
-        FTP_HOST = os.environ['FTP_HOST']
-        FTP_USER = os.environ['FTP_USER']
-        FTP_PASS = os.environ['FTP_PASS']
+        DATABASE_URL = os.getenv(['DATABASE_URL'])
+        FTP_HOST = os.getenv(['FTP_HOST'])
+        FTP_USER = os.getenv(['FTP_USER'])
+        FTP_PASS = os.getenv(['FTP_PASS'])
+        MIN_INTERVAL = int(os.getenv(['MIN_INTERVAL'],3))
         
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         
         cur.execute("SELECT * FROM registrations;")
         rowcount = cur.rowcount
-        eta = (rowcount + 1) * 3
+        eta = (rowcount + 1) * MIN_INTERVAL
         
         newFilename = uuid.uuid4() + '.txt'
         file = request.files['tsvFile']
@@ -33,6 +34,7 @@ def form():
         if not error:
             ftp = FTP(FTP_HOST,FTP_USER,FTP_PASS)
             ftp.storlines("STOR " + newFilename, open('/uploads/'+newFilename, 'rb'))
+            os.remove('/uploads/'+newFilename)
             
             cur.execute("INSERT INTO registrations (mobilize_url,tsv_file,col_fname,col_lname,col_zip,col_email,col_cell,col_home) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",(request.form['mobilizeUrl'],newFilename,request.form['firstNameCol'],request.form['lastNameCol'],request.form['zipCol'],request.form['emailCol'],request.form['cellPhoneCol'],request.form['homePhoneCol']))
             conn.commit()

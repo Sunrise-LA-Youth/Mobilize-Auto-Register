@@ -1,7 +1,7 @@
 import os
 import sentry_sdk
 
-SENTRY_DSN = os.environ['SENTRY_DSN']
+SENTRY_DSN = os.getenv(['SENTRY_DSN'])
 if SENTRY_DSN:
     sentry_sdk.init(
         SENTRY_DSN,
@@ -14,7 +14,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 # Main cronjob function.
 from headless_chrome import rsvp
 
-MIN_INTERVAL = os.environ['MIN_INTERVAL']
+MIN_INTERVAL = os.getenv(['MIN_INTERVAL'],3)
 
 # Create an instance of scheduler and add function.
 scheduler = BlockingScheduler()

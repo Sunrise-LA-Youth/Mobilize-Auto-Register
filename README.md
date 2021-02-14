@@ -30,7 +30,7 @@ This is setup to be hosted on Heroku. Below are requirements when creating an ap
 1. Heroku Postgres - any plan is fine, including the free plan. The database only stores the queue; auto-registration requests are automatically deleted once completed.
 
 ## How to use
-1. Head to /index.php (this must be stored on a PHP server, not in Heroku)
+1. Head to / (the app's homepage)
 2. Paste the Mobilize America RSVP URL (this is the public-facing link that people register for your events on)
 3. Get a list of contacts in tab-separated-value format. If you're using EveryAction, export a list of contacts you want to register. The bot is pre-programmed to work super easily with the fields (in order) in the screenshot below (it's recommended that you copy this export format just so that it’s super easy to use, and save it for the future!). Export the list as a text file. Then Download the file EveryAction generates, unzip it, and upload the .txt file on the bot page.
 ![EveryAction Export Format](export-format.png)
