@@ -11,15 +11,16 @@ from ftplib import FTP
 
 def rsvp():
     
-    DATABASE_URL = os.getenv(['DATABASE_URL'])
-    FTP_HOST = os.getenv(['FTP_HOST'])
-    FTP_USER = os.getenv(['FTP_USER'])
-    FTP_PASS = os.getenv(['FTP_PASS'])
-    UTM_MEDIUM = os.getenv(['UTM_MEDIUM'])
-    UTM_SOURCE = os.getenv(['UTM_SOURCE'])
-    UTM_CAMPAIGN = os.getenv(['UTM_CAMPAIGN'],"python+auto+register")
-    DEFAULT_CUSTOM_FIELD_VAL = os.getenv(['DEFAULT_CUSTOM_FIELD_VAL'],"PYTHON AUTO REGISTER")
-    SLEEP_TIME = float(os.getenv(['SLEEP_TIME'],0.5))
+    DATABASE_URL = os.getenv('DATABASE_URL')
+    FTP_HOST = os.getenv('FTP_HOST')
+    FTP_USER = os.getenv('FTP_USER')
+    FTP_PASS = os.getenv('FTP_PASS')
+    URL_REGEX = os.getenv('URL_REGEX', "^https://www.mobilize.us/[a-zA-Z0-9]+/event/[0-9]+/")
+    UTM_MEDIUM = os.getenv('UTM_MEDIUM')
+    UTM_SOURCE = os.getenv('UTM_SOURCE')
+    UTM_CAMPAIGN = os.getenv('UTM_CAMPAIGN',"python+auto+register")
+    DEFAULT_CUSTOM_FIELD_VAL = os.getenv('DEFAULT_CUSTOM_FIELD_VAL',"PYTHON AUTO REGISTER")
+    SLEEP_TIME = float(os.getenv('SLEEP_TIME',0.5))
 
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     
@@ -32,9 +33,9 @@ def rsvp():
 
         # Verify Mobilize link is a valid Mobilize URL
         mobilizeLink = row[1]
-        verifyUrl = re.search("^https://www.mobilize.us/sunrisemovement/event/[0-9]+/", mobilizeLink)
+        verifyUrl = re.search(URL_REGEX, mobilizeLink)
         if verifyUrl is None:
-            print("Invalid Mobilize RSVP URL. It should look like this: https://www.mobilize.us/sunrisemovement/event/313945/")
+            print("Invalid Mobilize RSVP URL. It should look like this: https://www.mobilize.us/mobilize/event/313945/")
             sys.stdout.flush()
 
         # Fetch tsv file

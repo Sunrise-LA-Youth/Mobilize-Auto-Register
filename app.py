@@ -6,12 +6,13 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def form():
+    URL_REGEX = os.getenv('URL_REGEX', "^https://www.mobilize.us/[a-zA-Z0-9]+/event/[0-9]+/")
     if request.method == 'POST':
-        DATABASE_URL = os.getenv(['DATABASE_URL'])
-        FTP_HOST = os.getenv(['FTP_HOST'])
-        FTP_USER = os.getenv(['FTP_USER'])
-        FTP_PASS = os.getenv(['FTP_PASS'])
-        MIN_INTERVAL = int(os.getenv(['MIN_INTERVAL'],3))
+        DATABASE_URL = os.getenv('DATABASE_URL')
+        FTP_HOST = os.getenv('FTP_HOST')
+        FTP_USER = os.getenv('FTP_USER')
+        FTP_PASS = os.getenv('FTP_PASS')
+        MIN_INTERVAL = int(os.getenv('MIN_INTERVAL',3))
         
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
@@ -42,9 +43,7 @@ def form():
         
         cur.close()
         conn.close()
-        return render_template('index.html')
-    else:
-        return render_template('index.html')
+    return render_template('index.html',regex=URL_REGEX)
 
 if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support

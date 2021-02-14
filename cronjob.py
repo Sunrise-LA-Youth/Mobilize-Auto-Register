@@ -14,7 +14,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 # Main cronjob function.
 from headless_chrome import rsvp
 
-MIN_INTERVAL = os.getenv(['MIN_INTERVAL'],3)
+MIN_INTERVAL = os.getenv('MIN_INTERVAL',3)
 
 # Create an instance of scheduler and add function.
 scheduler = BlockingScheduler()

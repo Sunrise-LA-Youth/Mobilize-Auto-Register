@@ -10,21 +10,22 @@ This is setup to be hosted on Heroku. Below are requirements when creating an ap
 3. https://github.com/heroku/heroku-buildpack-chromedriver
 
 ### Config/Environment Variables
-| Variable                 | Default/Recommended Value           | Purpose                                                                                                          |
-| ------------------------ | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| CHROMEDRIVER_PATH        | /app/.chromedriver/bin/chromedriver |                                                                                                                  |
-| DEFAULT_CUSTOM_FIELD_VAL | PYTHON AUTO REGISTER                | Sets a default value for required custom fields on the RSVP page                                                 |
-| FTP_HOST                 |                                     | Used to get/store contact lists                                                                                  |
-| FTP_PASS                 |                                     | Used to get/store contact lists                                                                                  |
-| FTP_USER                 |                                     | Used to get/store contact lists                                                                                  |
-| GOOGLE_CHROME_BIN        | /app/.apt/usr/bin/google_chrome     |                                                                                                                  |
-| GOOGLE_CHROME_CHANNEL    | stable                              | Google Chrome release channel                                                                                    |
-| MIN_INTERVAL             | 3                                   | Time (in minutes) between events in queue                                                                        |
-| SENTRY_DSN               |                                     | Sentry DSN URL                                                                                                  |
-| SLEEP_TIME               | 0.5                                 | Time to wait between contact registrations. Recommended to be >0 so that the browser has time to submit the form |
-| UTM_CAMPAIGN             | python+auto+register                | URL-escaped UTM campaign                                                                                         |
-| UTM_MEDIUM               |                                     | URL-escaped UTM medium                                                                                           |
-| UTM_SOURCE               |                                     | URL-escaped UTM source                                                                                           |
+| Variable                 | Default/Recommended Value                           | Purpose                                                                                                          |
+| ------------------------ | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| CHROMEDRIVER_PATH        | /app/.chromedriver/bin/chromedriver                 |                                                                                                                  |
+| DEFAULT_CUSTOM_FIELD_VAL | PYTHON AUTO REGISTER                                | Sets a default value for required custom fields on the RSVP page                                                 |
+| FTP_HOST                 |                                                     | FTP hostname, used to get/store contact lists                                                                    |
+| FTP_PASS                 |                                                     | FTP password, used to get/store contact lists                                                                    |
+| FTP_USER                 |                                                     | FTP username, used to get/store contact lists                                                                    |
+| GOOGLE_CHROME_BIN        | /app/.apt/usr/bin/google_chrome                     |                                                                                                                  |
+| GOOGLE_CHROME_CHANNEL    | stable                                              | Google Chrome release channel                                                                                    |
+| MIN_INTERVAL             | 3                                                   | Time (in minutes) between events in queue                                                                        |
+| SENTRY_DSN               |                                                     | Sentry DSN URL                                                                                                   |
+| SLEEP_TIME               | 0.5                                                 | Time to wait between contact registrations. Recommended to be >0 so that the browser has time to submit the form |
+| URL_REGEX                | ^https://www.mobilize.us/[a-zA-Z0-9]+/event/[0-9]+/ | Regular expression to match the provided event RSVP URL with                                                     |
+| UTM_CAMPAIGN             | python+auto+register                                | URL-escaped UTM campaign to track where registrations come from in Mobilize attendance reports                   |
+| UTM_MEDIUM               |                                                     | URL-escaped UTM medium to track where registrations come from in Mobilize attendance reports                     |
+| UTM_SOURCE               |                                                     | URL-escaped UTM source to track where registrations come from in Mobilize attendance reports                     |
 
 ### Heroku Resources/Addons
 1. Heroku Postgres - any plan is fine, including the free plan. The database only stores the queue; auto-registration requests are automatically deleted once completed.

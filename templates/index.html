@@ -27,7 +27,7 @@
         {% endwith %}
         <form action="" method="post" onsubmit="return validateMyForm();" enctype="multipart/form-data">
             <div class="mb-3 form-floating">
-                <input type="url" required formnovalidate class="form-control" id="mobilizeUrl" name="mobilizeUrl" placeholder="https://www.mobilize.us/sunrisemovement/event/313945/">
+                <input type="url" required formnovalidate class="form-control" id="mobilizeUrl" name="mobilizeUrl" placeholder="https://www.mobilize.us/mobilize/event/313945/">
                 <label for="mobilizeUrl" class="form-label">Mobilize America RSVP URL</label>
             </div>
             <div class="mb-4">
@@ -91,7 +91,7 @@
             $('#mobilizeUrl').keyup(checkUrl)
             function checkUrl() {
                 var rsvpUrl = $('#mobilizeUrl').val();
-                var matchRegex = rsvpUrl.match("^https://www.mobilize.us/sunrisemovement/event/[0-9]+/");
+                var matchRegex = rsvpUrl.match("{{ regex }}");
                 if (matchRegex) {
                     $('#mobilizeUrl').removeClass('is-invalid');
                     $('#mobilizeUrl').addClass('is-valid');
