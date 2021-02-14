@@ -4,6 +4,7 @@ import uuid
 import os
 import psycopg2
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 
 @app.route('/', methods=['GET', 'POST'])
 def form():

@@ -52,7 +52,7 @@
         "UTM_SOURCE": {
             "value": "",
             "required": false
-        },
+        }
     },
     "formation": {
         "web": {
