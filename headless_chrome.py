@@ -19,7 +19,7 @@ def rsvp():
     UTM_SOURCE = os.environ['UTM_SOURCE']
     UTM_CAMPAIGN = os.environ['UTM_CAMPAIGN']
     DEFAULT_CUSTOM_FIELD_VAL = os.environ['DEFAULT_CUSTOM_FIELD_VAL']
-    SLEEP_TIME = os.environ['SLEEP_TIME']
+    SLEEP_TIME = int(os.environ['SLEEP_TIME'])
 
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     

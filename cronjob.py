@@ -18,6 +18,6 @@ MIN_INTERVAL = os.environ['MIN_INTERVAL']
 
 # Create an instance of scheduler and add function.
 scheduler = BlockingScheduler()
-scheduler.add_job(rsvp, "interval", minutes=MIN_INTERVAL)
+scheduler.add_job(rsvp, "interval", minutes=int(MIN_INTERVAL))
 
 scheduler.start()
