@@ -1,0 +1,67 @@
+{
+    "name": "Mobilize Auto Register",
+    "description": "Automatically register a TSV of contacts to a Mobilize America event",
+    "keywords": [
+        "Mobilize America",
+        "EveryAction",
+        "python",
+        "selenium"
+    ],
+    "website": "https://mobilize-auto-register.herokuapp.com",
+    "repository": "https://github.com/Sunrise-LA-Youth/Mobilize-Auto-Register",
+    "success_url": "/",
+    "addons": [
+        {
+            "plan": "heroku-postgresql:hobby-dev"
+        }
+    ],
+    "buildpacks": [
+        {
+            "url": "heroku/python"
+        },
+        {
+            "url": "https://github.com/heroku/heroku-buildpack-google-chrome"
+        },
+        {
+            "url": "https://github.com/heroku/heroku-buildpack-chromedriver"
+        }
+    ],
+    "env": {
+        "CHROMEDRIVER_PATH": "/app/.chromedriver/bin/chromedriver",
+        "DEFAULT_CUSTOM_FIELD_VAL": "PYTHON AUTO REGISTER",
+        "FTP_HOST": "",
+        "FTP_PASS": "",
+        "FTP_USER": "",
+        "GOOGLE_CHROME_BIN": "/app/.apt/usr/bin/google_chrome",
+        "GOOGLE_CHROME_CHANNEL": "stable",
+        "MIN_INTERVAL": "3",
+        "SENTRY_DSN": {
+            "value": "",
+            "required": false
+        },
+        "SLEEP_TIME": "0.5",
+        "URL_REGEX": "^https://www.mobilize.us/[a-zA-Z0-9]+/event/[0-9]+/",
+        "UTM_CAMPAIGN": {
+            "value": "python+auto+register",
+            "required": false
+        },
+        "UTM_MEDIUM": {
+            "value": "",
+            "required": false
+        },
+        "UTM_SOURCE": {
+            "value": "",
+            "required": false
+        }
+    },
+    "formation": {
+        "web": {
+            "quantity": 1,
+            "size": "free"
+        },
+        "clock": {
+            "quantity": 1,
+            "size": "free"
+        }
+    }
+}

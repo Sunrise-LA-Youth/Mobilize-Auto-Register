@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+        <title>Mobilize America Automatic RSVPer</title>
+    </head>
+    <body class="p-5 container">
+        <h1>Mobilize America Automatic RSVPer</h1>
+        <p class="lead mb-2">Submit the form below to automatically RSVP a list of contacts to a Mobilize America event.</p>
+        <a href="https://github.com/Sunrise-LA-Youth/Mobilize-Auto-RSVPer/" target="_blank" class="btn btn-link mb-2 mb-5">Learn more</a>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} mb-5 alert-dismissible fade show" role="alert">
+                        {{ message|safe }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form action="" method="post" onsubmit="return validateMyForm();" enctype="multipart/form-data">
+            <div class="mb-3 form-floating">
+                <input type="url" required formnovalidate class="form-control" id="mobilizeUrl" name="mobilizeUrl" placeholder="https://www.mobilize.us/mobilize/event/313945/">
+                <label for="mobilizeUrl" class="form-label">Mobilize America RSVP URL</label>
+            </div>
+            <div class="mb-4">
+                <label for="tsvFile" class="form-label">Tab-separated-value list of contacts</label>
+                <input required class="form-control" type="file" id="tsvFile" name="tsvFile" accept=".txt" aria-describedby="tsvHelp">
+                <div id="tsvHelp" class="form-text">
+                    This must be a tab-separated-value .txt file, with the first line being headers.
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <input required type="number" id="firstNameCol" name="firstNameCol" class="form-control" placeholder="First name column" aria-label="First name column" value="2">
+                        <label for="firstNameCol" class="form-label">First Name Column Number (0-index)</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input required type="number" id="lastNameCol" name="lastNameCol" class="form-control" placeholder="Last name column" aria-label="Last name column" value="1">
+                        <label for="lastNameCol" class="form-label">Last Name Column Number (0-index)</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input required type="number" id="zipCol" name="zipCol" class="form-control" placeholder="Zip code column" aria-label="Zip code column" value="9">
+                        <label for="zipCol" class="form-label">Zip Code Column Number (0-index)</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <input required type="number" id="emailCol" name="emailCol" class="form-control" placeholder="Email address column" aria-label="Email address column" value="12">
+                        <label for="emailCol" class="form-label">Email Address Column Number (0-index)</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input required type="number" id="cellPhoneCol" name="cellPhoneCol" class="form-control" placeholder="Cell phone column" aria-label="Cell phone column" value="13">
+                        <label for="cellPhoneCol" class="form-label">Cell Phone Column Number (0-index)</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input required type="number" id="homePhoneCol" name="homePhoneCol" class="form-control" placeholder="Home phone column" aria-label="Home phone column" value="5">
+                        <label for="homePhoneCol" class="form-label">Home Phone Column Number (0-index)</label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">RSVP this list of contacts</button>
+        </form>
+        
+        <hr class="my-5" />
+        
+        <a class="github-button" href="https://github.com/Sunrise-LA-Youth/Mobilize-Auto-RSVPer/subscription" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-eye" data-size="large" data-show-count="true" aria-label="Watch Sunrise-LA-Youth/Mobilize-Auto-RSVPer on GitHub">Watch</a>
+        <a class="github-button" href="https://github.com/Sunrise-LA-Youth/Mobilize-Auto-RSVPer" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star Sunrise-LA-Youth/Mobilize-Auto-RSVPer on GitHub">Star</a>
+        <a class="github-button" href="https://github.com/Sunrise-LA-Youth/Mobilize-Auto-RSVPer/fork" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-repo-forked" data-size="large" data-show-count="true" aria-label="Fork Sunrise-LA-Youth/Mobilize-Auto-RSVPer on GitHub">Fork</a>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <script>
+            $('#mobilizeUrl').keyup(checkUrl)
+            function checkUrl() {
+                var rsvpUrl = $('#mobilizeUrl').val();
+                var matchRegex = rsvpUrl.match("{{ regex }}");
+                if (matchRegex) {
+                    $('#mobilizeUrl').removeClass('is-invalid');
+                    $('#mobilizeUrl').addClass('is-valid');
+                }
+                else {
+                    $('#mobilizeUrl').removeClass('is-valid');
+                    $('#mobilizeUrl').addClass('is-invalid');
+                }
+                return matchRegex;
+            }
+            function validateMyForm() {
+                if(!checkUrl()) { 
+                    return false;
+                }
+                return true;
+            }
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    </body>
+</html>
