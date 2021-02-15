@@ -1,5 +1,5 @@
 # Imports
-from flask import Flask, render_template, request, flash # Flask
+from flask import Flask, render_template, request, flash, make_response # Flask
 from flask_talisman import Talisman # to improve Flask security
 from ftplib import FTP # to connect to FTP server
 import uuid # to randomly generate filename
