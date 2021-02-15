@@ -27,10 +27,10 @@ csp = {
     'style-src': [
         '\'self\'',
         'cdn.jsdelivr.net',
-        'unsafe-inline'
+        '\'unsafe-inline\''
     ]
 }
-talisman = Talisman(app, content_security_policy=csp, content_security_policy_nonce_in=['script-src','style-src'], strict_transport_security_preload=True)
+talisman = Talisman(app, content_security_policy=csp, content_security_policy_nonce_in=['script-src'], strict_transport_security_preload=True)
 
 # Register route
 @app.route('/', methods=['GET', 'POST'])
