@@ -24,9 +24,12 @@ csp = {
         'buttons.github.io',
         'code.jquery.com'
     ],
-    'style-src': '*'
+    'style-src': [
+        '\'self\'',
+        'cdn.jsdelivr.net',
+    ]
 }
-talisman = Talisman(app, content_security_policy=csp, content_security_policy_nonce_in=['script-src'], strict_transport_security_preload=True)
+talisman = Talisman(app, content_security_policy=csp, content_security_policy_nonce_in=['script-src','style-src'], strict_transport_security_preload=True)
 
 # Register route
 @app.route('/', methods=['GET', 'POST'])
@@ -75,8 +78,9 @@ def form():
         # Close PostgreSQL connection
         cur.close()
         conn.close()
+    resp = make_response(render_template('index.html',regex=URL_REGEX)) # Render template and pass RegEx as a variable
     resp.cache_control.max_age = 86400
-    return render_template('index.html',regex=URL_REGEX) # Render template and pass RegEx as a variable
+    return resp
 
 if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support
