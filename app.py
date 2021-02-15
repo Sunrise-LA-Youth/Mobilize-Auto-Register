@@ -10,7 +10,25 @@ import psycopg2 # PostgreSQL database connection
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 csp = {
-    'default-src': '*'
+    'default-src': [
+        '\'self\'',
+        'cdn.jsdelivr.net',
+        'buttons.github.io',
+        '*.mobilize.us',
+        'code.jquery.com',
+        'api.github.com'
+    ],
+    'script-src': [
+        '\'self\'',
+        'cdn.jsdelivr.net',
+        'buttons.github.io',
+        'code.jquery.com'
+    ],
+    'style-src': [
+        '\'self\'',
+        'cdn.jsdelivr.net',
+        'unsafe-inline'
+    ]
 }
 talisman = Talisman(app, content_security_policy=csp, content_security_policy_nonce_in=['script-src','style-src'], strict_transport_security_preload=True)
 
