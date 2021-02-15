@@ -14,15 +14,19 @@ csp = {
         '\'self\'',
         'cdn.jsdelivr.net',
         'buttons.github.io',
-        '*.mobilize.us'
+        '*.mobilize.us',
+        'code.jquery.com',
+        'api.github.com'
     ],
     'script-src': [
         '\'self\'',
         'cdn.jsdelivr.net',
-        'buttons.github.io'
-    ]
+        'buttons.github.io',
+        'code.jquery.com'
+    ],
+    'style-src': '*'
 }
-talisman = Talisman(app, content_security_policy=csp, content_security_policy_nonce_in=['script-src'])
+talisman = Talisman(app, content_security_policy=csp, content_security_policy_nonce_in=['script-src'], strict_transport_security_preload=True)
 
 # Register route
 @app.route('/', methods=['GET', 'POST'])
