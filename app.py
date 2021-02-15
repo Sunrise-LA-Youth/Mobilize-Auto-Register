@@ -9,7 +9,20 @@ import psycopg2 # PostgreSQL database connection
 # Initialize Flask app and Talisman security features
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-talisman = Talisman(app)
+csp = {
+    'default-src': [
+        '\'self\'',
+        'cdn.jsdelivr.net',
+        'buttons.github.io',
+        '*.mobilize.us'
+    ],
+    'script-src': [
+        '\'self\'',
+        'cdn.jsdelivr.net',
+        'buttons.github.io'
+    ]
+}
+talisman = Talisman(app, content_security_policy=csp, content_security_policy_nonce_in=['script-src'])
 
 # Register route
 @app.route('/', methods=['GET', 'POST'])
