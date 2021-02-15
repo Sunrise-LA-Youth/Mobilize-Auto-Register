@@ -75,6 +75,7 @@ def form():
         # Close PostgreSQL connection
         cur.close()
         conn.close()
+    resp.cache_control.max_age = 86400
     return render_template('index.html',regex=URL_REGEX) # Render template and pass RegEx as a variable
 
 if __name__ == '__main__':
