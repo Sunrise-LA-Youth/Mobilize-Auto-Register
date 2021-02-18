@@ -13,6 +13,12 @@ from selenium import webdriver
 
 def rsvp():
     """This function RSVPs the next submission of attendees in the queue."""
+    
+    # Pylint config
+    # pylint: disable=too-many-locals
+    # pylint: disable=too-many-branches
+    # pylint: disable=too-many-statements
+    
     # Get env variables, set defaults if not set (for some)
     database_url = os.getenv('DATABASE_URL')
     ftp_host = os.getenv('FTP_HOST')
@@ -147,3 +153,8 @@ def rsvp():
     # Close PostgreSQL connection
     cur.close()
     conn.close()
+
+# Pylint config
+# pylint: enable=too-many-locals
+# pylint: enable=too-many-branches
+# pylint: enable=too-many-statements
