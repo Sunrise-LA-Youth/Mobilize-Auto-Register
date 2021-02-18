@@ -30,37 +30,41 @@ csp = {
         '\'unsafe-inline\''
     ]
 }
-talisman = Talisman(app, content_security_policy=csp, content_security_policy_nonce_in=['script-src'], strict_transport_security_preload=True)
+talisman = Talisman(app,
+                    content_security_policy=csp,
+                    content_security_policy_nonce_in=['script-src'],
+                    strict_transport_security_preload=True)
 
 # Register route
 @app.route('/', methods=['GET', 'POST'])
 def form():
     # Get RegEx env variable, set default if not set
     URL_REGEX = os.getenv('URL_REGEX', "^https://www.mobilize.us/[a-zA-Z0-9]+/event/[0-9]+/")
-    
+
     if request.method == 'POST': # If form submitted
-        
+
         # Get env variables
         DATABASE_URL = os.getenv('DATABASE_URL')
         FTP_HOST = os.getenv('FTP_HOST')
         FTP_USER = os.getenv('FTP_USER')
         FTP_PASS = os.getenv('FTP_PASS')
         MIN_INTERVAL = int(os.getenv('MIN_INTERVAL',3))
-        
+
         # Connect to PostgreSQL database
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
-        
+
         # Calculate ETA based on how many registrations are in the queue
         cur.execute("SELECT * FROM registrations;")
         rowcount = cur.rowcount
         eta = (rowcount + 1) * MIN_INTERVAL
-        
+
         # Get submitted .txt file and set new random filename
         newFilename = str(uuid.uuid4()) + '.txt'
         file = request.files['tsvFile']
-        
-        error = False # We'll use this later to not do anything with the submitted data if it gets set to True
+
+        # We'll use this later to not do anything with the submitted data if it gets set to True
+        error = False
         if ".txt" not in file.filename: # If file is not a .txt file
             flash('<strong>Invalid file type:</strong> You must upload a .txt file.', 'danger') # Flash error message
             error = True

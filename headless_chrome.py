@@ -3,12 +3,12 @@ import re # RegEx
 import os
 import csv # Read submitted CSV file
 import time # To sleep between attendees
+from datetime import datetime # to get current year for year-based custom fields
+from ftplib import FTP # to connect to FTP server
 import psycopg2 # PostgreSQL database connection
 import sys # To print logs
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from datetime import datetime # to get current year for year-based custom fields
-from ftplib import FTP # to connect to FTP server
 
 def rsvp():
     
