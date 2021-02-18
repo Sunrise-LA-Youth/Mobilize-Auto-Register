@@ -40,7 +40,8 @@ talisman = Talisman(app,
 # Register route
 @app.route('/', methods=['GET', 'POST'])
 def form():
-    """This function runs the Flask webpage to show and submit a form to the queue of registrations."""
+    """This function runs the Flask webpage to show
+    and submit a form to the queue of registrations."""
     # Get RegEx env variable, set default if not set
     url_regex = os.getenv('URL_REGEX', "^https://www.mobilize.us/[a-zA-Z0-9]+/event/[0-9]+/")
 
@@ -79,8 +80,9 @@ def form():
 
             # Add registration to queue
             cur.execute("INSERT INTO "
-                        "registrations (mobilize_url,tsv_file,col_fname,col_lname,"
-                        "col_zip,col_email,col_cell,col_home) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                        "registrations (mobilize_url,tsv_file,col_fname,"
+                        "col_lname,col_zip,col_email,col_cell,col_home) "
+                        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
                         (
                             request.form['mobilizeUrl'],
                             new_filename,
@@ -96,7 +98,7 @@ def form():
             # Flash success message with queue details
             flash("<strong>List submitted!</strong> The contacts you selected will "
                   "be registered shortly for the specified Mobilize event. We estimate "
-                  "the contacts will be RSVPed in the next " + str(eta) + 
+                  "the contacts will be RSVPed in the next " + str(eta) +
                   " minutes, with " + str(rowcount) + " other registrations ahead."
                   ,'info')
 
