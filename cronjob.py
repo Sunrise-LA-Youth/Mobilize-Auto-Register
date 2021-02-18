@@ -1,4 +1,5 @@
-"""This module runs app.py at a regular interval to automatically register the next event in the queue."""
+"""This module runs app.py at a regular interval to
+automatically register the next event in the queue."""
 
 # Imports
 import os
