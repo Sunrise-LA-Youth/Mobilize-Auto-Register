@@ -1,6 +1,8 @@
 # Mobilize RSVPer
 Automatically RSVP a TSV of contacts (i.e. from EveryAction) to a Mobilize America event. Utilizes a PostgreSQL database to store a queue of lists of contacts to RSVP.
 
+![Pylint](https://github.com/Sunrise-LA-Youth/Mobilize-Auto-Register/workflows/Pylint/badge.svg)
+
 ## Heroku Setup
 This is setup to be hosted on Heroku. You can deploy using the button below, or see the lists and tables below for setup requirements.
 
