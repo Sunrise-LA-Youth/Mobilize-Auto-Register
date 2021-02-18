@@ -26,7 +26,8 @@ def rsvp():
     utm_source = os.getenv('UTM_SOURCE')
     # Added to Mobilize RSVP URL to track how attendees registered in attendee reports
     utm_campaign = os.getenv('UTM_CAMPAIGN',"python+auto+register")
-    # In the event there are custom fields that are required to register, this will be submitted in that field
+    # In the event there are custom fields that are required to
+    # register, this will be submitted in that field
     default_custom_field_val = os.getenv('DEFAULT_CUSTOM_FIELD_VAL',"PYTHON AUTO REGISTER")
     sleep_time = float(os.getenv('SLEEP_TIME', '0.5')) # Time to wait between attendees
 
@@ -66,7 +67,7 @@ def rsvp():
             driver = webdriver.Chrome(
                 executable_path=os.getenv(
                     "CHROMEDRIVER_PATH",
-                    "/app/.chromedriver/bin/chromedriver"), 
+                    "/app/.chromedriver/bin/chromedriver"),
                 chrome_options=chrome_options)
 
             firstline = True
@@ -122,13 +123,13 @@ def rsvp():
                 # Set birthyear custom field (if exists and required) to current year
                 birth_year = driver.find_elements_by_name("custom-field-birthyear")
                 if birth_year:
-                    for text_input in birthYear:
-                        req_val = textInput.get_attribute("required")
+                    for text_input in birth_year:
+                        req_val = text_input.get_attribute("required")
                         if req_val:
                             text_input.clear()
                             text_input.send_keys(datetime.now().year)
 
-                customFieldWrapper.submit() # Submit registration form
+                custom_field_wrapper.submit() # Submit registration form
 
                 time.sleep(sleep_time) # Wait sleep_time to ensure form gets submitted successfully
             driver.close() # Close Chrome window

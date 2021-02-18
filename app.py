@@ -96,7 +96,7 @@ def form():
             # Flash success message with queue details
             flash("<strong>List submitted!</strong> The contacts you selected will "
                   "be registered shortly for the specified Mobilize event. We estimate "
-                  "the contacts will be RSVPed in the next " + str(eta)
+                  "the contacts will be RSVPed in the next " + str(eta) + 
                   " minutes, with " + str(rowcount) + " other registrations ahead."
                   ,'info')
 
