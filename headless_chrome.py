@@ -112,6 +112,8 @@ def rsvp():
                     unique_url += "&utm_campaign="+utm_campaign
 
                 driver.get(unique_url) # Open URL
+                form_wrapper = driver.find_element_by_css_selector(
+                    ".signup-form")
 
                 # Set birthyear custom field (if exists and required) to current year
                 birth_year = driver.find_elements_by_name("custom-field-birthyear")
@@ -129,9 +131,9 @@ def rsvp():
                         req_val = text_input.get_attribute("required")
                         if req_val:
                             text_input.clear()
-                            field.send_keys(default_custom_field_val)
+                            text_input.send_keys(default_custom_field_val)
 
-                custom_field_wrapper.submit() # Submit registration form
+                form_wrapper.submit() # Submit registration form
 
                 time.sleep(sleep_time) # Wait sleep_time to ensure form gets submitted successfully
             driver.close() # Close Chrome window
