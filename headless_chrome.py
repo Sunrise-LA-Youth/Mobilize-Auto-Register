@@ -112,19 +112,6 @@ def rsvp():
                     unique_url += "&utm_campaign="+utm_campaign
 
                 driver.get(unique_url) # Open URL
-                # Get custom field wrapper element
-                custom_field_wrapper = driver.find_element_by_css_selector(
-                    ".signup-form div[class*=\"CustomFieldWrapper\"]")
-                # Get custom field inputs
-                custom_fields = custom_field_wrapper.find_elements_by_tag_name("input")
-                for field in custom_fields: # foreach custom field input
-                    req_val = field.get_attribute("required") # determine if input is required
-
-                    # if input is required, clear whatever's there already
-                    # and type in the default value (set in env variables)
-                    if req_val:
-                        field.clear()
-                        field.send_keys(default_custom_field_val)
 
                 # Set birthyear custom field (if exists and required) to current year
                 birth_year = driver.find_elements_by_name("custom-field-birthyear")
@@ -134,6 +121,15 @@ def rsvp():
                         if req_val:
                             text_input.clear()
                             text_input.send_keys(datetime.now().year)
+
+                # Set accessibility custom field (if exists and required) to default
+                accessibility = driver.find_elements_by_name("custom-field-accessibility")
+                if accessibility:
+                    for text_input in accessibility:
+                        req_val = text_input.get_attribute("required")
+                        if req_val:
+                            text_input.clear()
+                            field.send_keys(default_custom_field_val)
 
                 custom_field_wrapper.submit() # Submit registration form
 
