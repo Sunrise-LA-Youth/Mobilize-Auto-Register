@@ -18,6 +18,7 @@ def rsvp():
     # pylint: disable=too-many-locals
     # pylint: disable=too-many-branches
     # pylint: disable=too-many-statements
+    # pylint: disable=consider-using-with
 
     # Get env variables, set defaults if not set (for some)
     database_url = os.getenv('DATABASE_URL')
@@ -162,3 +163,4 @@ def rsvp():
 # pylint: enable=too-many-locals
 # pylint: enable=too-many-branches
 # pylint: enable=too-many-statements
+# pylint: enable=consider-using-with
