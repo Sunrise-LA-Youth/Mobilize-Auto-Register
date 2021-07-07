@@ -137,7 +137,7 @@ def rsvp():
                 timeslot = form_wrapper.find_element_by_css_selector(
                     'label[data-track="Timeslot checkbox"]:first-of-type input')
                 if timeslot and not timeslot.is_selected():
-                        timeslot.click()
+                    timeslot.click()
 
                 form_wrapper.submit() # Submit registration form
 
