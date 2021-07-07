@@ -133,11 +133,11 @@ def rsvp():
                             text_input.clear()
                             text_input.send_keys(default_custom_field_val)
 
-                # Choose next timeslot of Mobilize doesn't pre-check
+                # Choose next timeslot if Mobilize doesn't pre-check
                 timeslot = form_wrapper.find_element_by_css_selector(
                     'label[data-track="Timeslot checkbox"]:first-of-type input')
-                if not timeslot.is_selected():
-                    timeslot.click()
+                if timeslot and not timeslot.is_selected():
+                        timeslot.click()
 
                 form_wrapper.submit() # Submit registration form
 
